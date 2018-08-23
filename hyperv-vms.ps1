@@ -2,7 +2,7 @@
 # script worked fine on Win10 1804 after some trial and error
 
 # Variables
-$VM0 = "vm0"					#Windows Server VM
+$VM0 = "vm0"					#Windows Server VM (use case: AD and DNS only)
 $VM1 = "vm1"					#Linux VM1
 $VM2 = "vm2"					#Linux VM2
 
@@ -31,7 +31,7 @@ $winSecureBootTemplate = "MicrosoftWindows"
 
 # Create VM Folder and Network Switch
 mkdir $VMLOC -ErrorAction SilentlyContinue
-$TestSwitch = Get-VMSwitch -Name $NetworkSwitch1 -ErrorAction SilentlyContinue; if ($TestSwitch.Count -EQ 0){New-VMSwitch -Name $NetworkSwitch1 -SwitchType Private}
+$TestSwitch = Get-VMSwitch -Name $NetworkSwitch1 -ErrorAction SilentlyContinue; if ($TestSwitch.Count -EQ 0){New-VMSwitch -Name $NetworkSwitch1 -SwitchType External}
 
 # Create Virtual Machines
 New-VM -Name $VM0 -Path $VMLOC -MemoryStartupBytes $VM0RAM -NewVHDPath $VHDLOC\$VM0.vhdx -NewVHDSizeBytes $VM0VHD -SwitchName $NetworkSwitch1 -Generation $Gen
