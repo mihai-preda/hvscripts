@@ -14,16 +14,16 @@ $VM0VHD = 30GB
 $VM1VHD = 10GB
 $VM2VHD = 10GB
 
-$VMLOC = "Z:\Hyper-V\Virtual Machines"
-$VHDLOC = "Z:\Hyper-V\Virtual Hard Disks"
+$VMLOC = "D:\Hyper-V\Virtual Machines"
+$VHDLOC = "D:\Hyper-V\Virtual Hard Disks"
 $NetworkSwitch1 = "vSwitch1"
 
-$VM0ISO = "E:\isos\Win-SRV-2016.ISO"
+$VM0ISO = "Z:\isos\Win-SRV-2016.ISO"
 # when string is long, as is above, use a var to declare it once
 # otherwise, use it inside the command like in the case of -ControllerNumber (see below)
 # whatever saves on typing or space
-$VM1ISO = "E:\isos\CentOS-7-Minimal-1.iso"
-$VM2ISO = "E:\isos\CentOS-7-Minimal-2.iso"
+$VM1ISO = "Z:\isos\CentOS-7-Minimal-1.iso"
+$VM2ISO = "Z:\isos\CentOS-7-Minimal-2.iso"
 
 $Gen = 2
 $linuxSecureBootTemplate = "MicrosoftUEFICertificateAuthority"
