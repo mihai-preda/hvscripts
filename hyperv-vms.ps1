@@ -4,15 +4,18 @@
 # Variables
 $VM0 = "vm0"					#Windows Server VM (use case: AD and DNS only)
 $VM1 = "vm1"					#Linux VM1
-$VM2 = "vm2"					#Linux VM2
+$VM2 = "vm2"                    #Linux VM2
+$VM3 = "vm3"					#Windows 7 Pro
 
 $VM0RAM = 1GB
 $VM1RAM = 1GB
 $VM2RAM = 1GB
+$VM3RAM = 1GB
 
 $VM0VHD = 30GB
 $VM1VHD = 10GB
 $VM2VHD = 10GB
+$VM3VHD = 50GB
 
 $VMLOC = "D:\Hyper-V\Virtual Machines"
 $VHDLOC = "D:\Hyper-V\Virtual Hard Disks"
@@ -24,8 +27,10 @@ $VM0ISO = "Z:\isos\Win-SRV-2016.ISO"
 # whatever saves on typing or space
 $VM1ISO = "Z:\isos\CentOS-7-Minimal-1.iso"
 $VM2ISO = "Z:\isos\CentOS-7-Minimal-2.iso"
+$VM3ISO = "Z:\isos\Win7Pro.iso"
 
-$Gen = 2
+$Gen1 = 1
+$Gen2 = 2
 $linuxSecureBootTemplate = "MicrosoftUEFICertificateAuthority"
 $winSecureBootTemplate = "MicrosoftWindows"
 
@@ -34,18 +39,21 @@ mkdir $VMLOC -ErrorAction SilentlyContinue
 $TestSwitch = Get-VMSwitch -Name $NetworkSwitch1 -ErrorAction SilentlyContinue; if ($TestSwitch.Count -EQ 0){New-VMSwitch -Name $NetworkSwitch1 -SwitchType External}
 
 # Create Virtual Machines
-New-VM -Name $VM0 -Path $VMLOC -MemoryStartupBytes $VM0RAM -NewVHDPath $VHDLOC\$VM0.vhdx -NewVHDSizeBytes $VM0VHD -SwitchName $NetworkSwitch1 -Generation $Gen
-New-VM -Name $VM1 -Path $VMLOC -MemoryStartupBytes $VM1RAM -NewVHDPath $VHDLOC\$VM1.vhdx -NewVHDSizeBytes $VM1VHD -SwitchName $NetworkSwitch1 -Generation $Gen
-New-VM -Name $VM2 -Path $VMLOC -MemoryStartupBytes $VM2RAM -NewVHDPath $VHDLOC\$VM2.vhdx -NewVHDSizeBytes $VM2VHD -SwitchName $NetworkSwitch1 -Generation $Gen
+New-VM -Name $VM0 -Path $VMLOC -MemoryStartupBytes $VM0RAM -NewVHDPath $VHDLOC\$VM0.vhdx -NewVHDSizeBytes $VM0VHD -SwitchName $NetworkSwitch1 -Generation $Gen2
+New-VM -Name $VM1 -Path $VMLOC -MemoryStartupBytes $VM1RAM -NewVHDPath $VHDLOC\$VM1.vhdx -NewVHDSizeBytes $VM1VHD -SwitchName $NetworkSwitch1 -Generation $Gen2
+New-VM -Name $VM2 -Path $VMLOC -MemoryStartupBytes $VM2RAM -NewVHDPath $VHDLOC\$VM2.vhdx -NewVHDSizeBytes $VM2VHD -SwitchName $NetworkSwitch1 -Generation $Gen2
+New-VM -Name $VM3 -Path $VMLOC -MemoryStartupBytes $VM3RAM -NewVHDPath $VHDLOC\$VM3.vhdx -NewVHDSizeBytes $VM3VHD -SwitchName $NetworkSwitch1 -Generation $Gen1
 
 # Configure Virtual Machines
 Add-VMDvdDrive -VMName $VM0 -ControllerNumber 0 -ControllerLocation 1 -Path $VM0ISO
 Add-VMDvdDrive -VMName $VM1 -ControllerNumber 0 -ControllerLocation 1 -Path $VM1ISO
 Add-VMDvdDrive -VMName $VM2 -ControllerNumber 0 -ControllerLocation 1 -Path $VM2ISO
+Add-VMDvdDrive -VMName $VM3 -ControllerNumber 1 -ControllerLocation 0 -Path $VM3ISO
 
 Set-VMFirmware -VMName $VM0 -FirstBootDevice $(Get-VMDvdDrive -VMName $VM0) -EnableSecureBoot On -SecureBootTemplate $winSecureBootTemplate
 Set-VMFirmware -VMName $VM1 -FirstBootDevice $(Get-VMDvdDrive -VMName $VM1) -EnableSecureBoot On -SecureBootTemplate $linuxSecureBootTemplate
 Set-VMFirmware -VMName $VM2 -FirstBootDevice $(Get-VMDvdDrive -VMName $VM2) -EnableSecureBoot On -SecureBootTemplate $linuxSecureBootTemplate
+Set-VMFirmware -VMName $VM3 -FirstBootDevice $(Get-VMDvdDrive -VMName $VM3) -EnableSecureBoot On -SecureBootTemplate $winSecureBootTemplate
 
 #Start-VM $VM0
 #Start-VM $VM1
