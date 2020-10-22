@@ -6,9 +6,9 @@ $VM0 = "vm0"					#Windows Server VM (use case: AD and DNS only)
 $VM1 = "vm1"					#Linux VM1
 $VM2 = "vm2"                    #Linux VM2
 
-$VM0RAM = 1GB
-$VM1RAM = 1GB
-$VM2RAM = 1GB
+$VM0RAM = 2GB
+$VM1RAM = 2GB
+$VM2RAM = 2GB
 
 $VM0VHD = 30GB
 $VM1VHD = 10GB
@@ -22,8 +22,8 @@ $VM0ISO = "Z:\isos\Win-SRV-2016.ISO"
 # when string is long, as is above, use a var to declare it once
 # otherwise, use it inside the command like in the case of -ControllerNumber (see below)
 # whatever saves on typing or space
-$VM1ISO = "Z:\isos\CentOS-7-Minimal-1.iso"
-$VM2ISO = "Z:\isos\CentOS-7-Minimal-2.iso"
+$VM1ISO = "D:\isos\CentOS-7-Minimal-1.iso"
+$VM2ISO = "D:\isos\CentOS-7-Minimal-2.iso"
 
 
 $Gen2 = 2
